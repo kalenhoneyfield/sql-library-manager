@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const createError = require('http-errors');
 const Book = require('../models').Book;
 
 //catch server side errors in one place
@@ -44,7 +45,7 @@ router.post(
         res.render('new-book', {
           book: book,
           errors: err.errors,
-          title: 'New Book With Errors?',
+          title: `New Book: Oops looks like we're missing something`,
         });
       } else {
         throw err;
@@ -56,12 +57,12 @@ router.post(
 /* GET a book */
 router.get(
   '/:id',
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
       res.render('view-book', { book: book, title: book.title });
     } else {
-      res.sendStatus(404);
+      next(createError(404));
     }
   })
 );
@@ -74,7 +75,7 @@ router.get(
     if (book) {
       res.render('update-book', { book: book, title: `Edit: ${book.title}` });
     } else {
-      res.sendStatus(404);
+      next(createError(404));
     }
   })
 );
@@ -91,7 +92,7 @@ router.post(
         await book.update(req.body);
         res.redirect('/books/' + book.id);
       } else {
-        res.sendStatus(404);
+        next(createError(404));
       }
     } catch (err) {
       if (err.name === 'SequelizeValidationError') {

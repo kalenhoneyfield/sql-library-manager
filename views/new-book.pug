@@ -3,13 +3,22 @@ extends layout
 block content
   h1= title
 
+  - var noTitle = '';
+  - var noAuthor = '';
+  if errors 
+    for err in errors
+      if err.path == "title"
+        - noTitle = err.message
+      if err.path == "author"
+        - noAuthor = err.message
+
   form(method='POST' action='/books/new')
     p
       label(for="title") Title
-      input(type="text" name="title" id="title")
+      input(type="text" name="title" id="title" placeholder=`${noTitle}`)
     p
       label(for="author") Author
-      input(type="text" name="author" id="author")
+      input(type="text" name="author" id="author" placeholder=`${noAuthor}`)
     p
       label(for="genre") Genre
       input(type="text" name="genre" id="genre")
