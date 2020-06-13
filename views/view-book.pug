@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+
+      p
+        div(name="title" id="title") #{book.author}
+      p  
+        div(name="title" id="title") #{book.genre}
+      p  
+        div(name="title" id="title") #{book.year}
+
+      div
+        a(href=`/books/${book.id}/edit`) Edit this book

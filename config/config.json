@@ -1,0 +1,20 @@
+{
+  "development": {
+    "dialect": "sqlite",
+    "storage": "library.db"
+  },
+  "test": {
+    "dialect": "sqlite",
+    "storage": "library.db",
+    "define": {
+      "paranoid": true
+    }
+  },
+  "production": {
+    "dialect": "sqlite",
+    "storage": "library.db",
+    "define": {
+      "paranoid": true
+    }
+  }
+}

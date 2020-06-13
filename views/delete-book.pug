@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method="POST" action=`/books/${book.id}/delete`)
+    p
+      a.button(href=`/books`) Nevermind!
+    p
+      input(type="submit" value=`Make ${book.author} cry`)
