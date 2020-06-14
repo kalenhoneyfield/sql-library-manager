@@ -1,14 +1,23 @@
 extends layout
 
 block content
-  h1= title
 
+  .fontWhite
+    h1= title
+
+      p 
+        label(for="title") Title 
+        input(type="text" name="title" id="title" disabled value=`${book.title}` )
       p
-        div(name="title" id="title") #{book.author}
-      p  
-        div(name="title" id="title") #{book.genre}
-      p  
-        div(name="title" id="title") #{book.year}
+        label(for="author") Author
+        input(type="text" name="author" id="author" disabled value=`${book.author}` )
+      p
+        label(for="genre") Genre
+        input(type="text" name="genre" id="genre" disabled value=`${book.genre}`)
+      p
+        label(for="year") Year
+        input(type="text" name="year" id="year" disabled value=`${book.year}`)
 
       div
-        a(href=`/books/${book.id}/edit`) Edit this book
+        a.button(href=`/books/${book.id}/edit`) Edit this book
+

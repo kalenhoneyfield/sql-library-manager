@@ -117,7 +117,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
-      res.render('delete-book', { book: book, title: `Delete "${book.title}"?` });
+      res.render('delete-book', { book: book, title: book.title });
     } else {
       res.sendStatus(404);
     }

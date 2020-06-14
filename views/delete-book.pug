@@ -1,10 +1,13 @@
 extends layout
 
 block content
-  h1= title
+  .grid.grid-center.book
+    heading Are you sure you want to delete #{title}?
+    span
+      | This is a permanent action and can not be undone after doing so.
 
-  form(method="POST" action=`/books/${book.id}/delete`)
-    p
-      a.button(href=`/books`) Nevermind!
-    p
-      input(type="submit" value=`Make ${book.author} cry`)
+    form(method="POST" action=`/books/${book.id}/delete`)
+      p
+        a.button.border(href=`/books`) Nevermind!
+      p
+        input.border(type="submit" value=`Delete and make ${book.author} cry`)

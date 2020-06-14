@@ -1,22 +1,29 @@
 extends layout
 
 block content
-  h1= title
 
-  p 
-    a.button(href=`/books/new`) Create New Book
+  p.searchInput
+    a.button.border(href=`/books/new`) Create New Book
+    input#searchInput(type="text" placeholder="Search..")
   
-  table
+  table#bookTable
     tr
       th Title
       th Author
       th Genre
       th Year
     each book in books
-      tr
-        td 
-          a(href=`/books/${book.id}`) #{book.title}
-        td #{book.author}
-        td #{book.genre}
-        td #{book.year}
+        tr.bookRow.pagi
+          td
+            a(href=`/books/${book.id}`) #{book.title}
+          td
+            a(href=`/books/${book.id}`) #{book.author}
+          td
+            a(href=`/books/${book.id}`) #{book.genre}
+          td
+            a(href=`/books/${book.id}`) #{book.year}
 
+  div.pagination-section
+    ul.pagination
+
+  script(src='/javascripts/app.js')

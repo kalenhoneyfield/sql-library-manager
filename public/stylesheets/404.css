@@ -1,0 +1,50 @@
+.fourOhFour {
+  /* justify-content: space-evenly; */
+  flex-direction: column;
+  display: flex;
+  height: 110vh;
+  background-image: url('/images/will-terra--4SnP61VGbU-unsplash.jpg');
+  background-size: cover;
+  /* background: linear-gradient(to bottom, rgb(189, 241, 241), 50%, rgb(2, 18, 250)); */
+  background-blend-mode: multiply;
+}
+
+.mia {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  margin: auto;
+  font-size: 25.5vw;
+  color: aliceblue;
+  animation-name: wobble;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  text-shadow: 2px 2px 2px #b9b9b9;
+}
+
+@keyframes wobble {
+  0% {
+    transform: skew(5deg, 5deg);
+  }
+  50% {
+    transform: skew(-5deg, -5deg);
+  }
+  100% {
+    transform: skew(5deg, 5deg);
+  }
+}
+
+.error {
+  color: #ffffff;
+}
+.error pre {
+  text-shadow: 1px 1px 1px #000000;
+}
+.error h1 {
+  text-shadow: 1px 1px 1px #000000;
+  text-decoration: underline;
+}
+.error h2 {
+  text-shadow: 1px 1px 1px #000000;
+  text-decoration: underline;
+}

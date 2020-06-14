@@ -1,33 +1,34 @@
 extends layout
 
 block content
-  h1= title
+  .fontWhite
+    h1= title
 
-  - var noTitle = '';
-  - var noAuthor = '';
-  if errors 
-    for err in errors
-      if err.path == "title"
-        - noTitle = err.message
-      if err.path == "author"
-        - noAuthor = err.message
-  
-  form(method='POST' action=`/books/${book.id}`)
-    p 
-      label(for="title") Title 
-      input(type="text" name="title" id="title" value=`${book.title}` placeholder=`${noTitle}`)
-    p
-      label(for="author") Author
-      input(type="text" name="author" id="author" value=`${book.author}` placeholder=`${noAuthor}`)
-    p
-      label(for="genre") Genre
-      input(type="text" name="genre" id="genre" value=`${book.genre}`)
-    p
-      label(for="year") Year
-      input(type="text" name="year" id="year" value=`${book.year}`)
-    p
-      input(type="submit" value="Update this book")
-    p
-      a.button(href=`/books`) Nevermind!
-    p
-      a.button(href=`/books/${book.id}/delete`) Delete book
+    - var noTitle = '';
+    - var noAuthor = '';
+    if errors 
+      for err in errors
+        if err.path == "title"
+          - noTitle = err.message
+        if err.path == "author"
+          - noAuthor = err.message
+    
+    form(method='POST' action=`/books/${book.id}`)
+      p 
+        label(for="title") Title 
+        input(type="text" name="title" id="title" value=`${book.title}` placeholder=`${noTitle}`)
+      p
+        label(for="author") Author
+        input(type="text" name="author" id="author" value=`${book.author}` placeholder=`${noAuthor}`)
+      p
+        label(for="genre") Genre
+        input(type="text" name="genre" id="genre" value=`${book.genre}`)
+      p
+        label(for="year") Year
+        input(type="text" name="year" id="year" value=`${book.year}`)
+      p
+        input.border(type="submit" value="Update this book")
+      p
+        a.button.border(href=`/books`) Nevermind!
+      p
+        a.button.border(href=`/books/${book.id}/delete`) Delete book
