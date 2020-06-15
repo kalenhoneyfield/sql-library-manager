@@ -113,8 +113,6 @@ router.post(
       total: count,
       numberOfLinks: pagiLinksTotal,
     });
-
-    // res.render('index', { books: books, title: 'Books' });
   })
 );
 
