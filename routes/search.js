@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const createError = require('http-errors');
 const Book = require('../models').Book;
 
 const db = require('../models');
@@ -17,12 +16,13 @@ function asyncHandler(callback) {
   };
 }
 
+/* get the base search route should look like the books page but with fewer books */
 router.get(
   '/',
   asyncHandler(async (req, res) => {
     const query = req.query.query || '';
-    const limit = isNaN(req.query.limit) ? 10 : req.query.limit;
-    const page = req.query.page ? req.query.page : 1;
+    const limit = isNaN(req.query.limit) ? 10 : req.query.limit; //not sure why but the try catch block wasn't catching this error if a user typed something goofy in
+    const page = isNaN(req.query.page) ? 1 : req.query.page;
     let offset = (page - 1) * limit;
     let books;
     try {
@@ -80,7 +80,7 @@ router.post(
   asyncHandler(async (req, res) => {
     const limit = 10;
     const query = req.body.search;
-    const page = req.query.page ? req.query.page : 1;
+    const page = isNaN(req.query.page) ? 1 : req.query.page;
     let books;
     const { count, rows } = await Book.findAndCountAll({
       where: {

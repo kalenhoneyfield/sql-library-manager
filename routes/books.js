@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const createError = require('http-errors');
 const Book = require('../models').Book;
 
 const db = require('../models');
@@ -21,9 +20,9 @@ function asyncHandler(callback) {
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const limit = req.query.limit || 10;
-    let offset = req.query.page ? (req.query.page - 1) * limit : 0;
-    const page = req.query.page ? req.query.page : 1;
+    const limit = isNaN(req.query.limit) ? 10 : req.query.limit;
+    const page = isNaN(req.query.page) ? 1 : req.query.page;
+    let offset = page ? (page - 1) * limit : 0;
     let books;
     const { count, rows } = await Book.findAndCountAll({
       order: [['year', 'DESC']],
