@@ -20,50 +20,57 @@ function asyncHandler(callback) {
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const query = req.query.query;
-    const limit = req.query.limit;
-    let offset = (req.query.page - 1) * limit;
+    const query = req.query.query || '';
+    const limit = isNaN(req.query.limit) ? 10 : req.query.limit;
+    const page = req.query.page ? req.query.page : 1;
+    let offset = (page - 1) * limit;
     let books;
-    const { count, rows } = await Book.findAndCountAll({
-      where: {
-        [Op.or]: [
-          {
-            title: {
-              [Op.like]: `%${query}%`,
+    try {
+      const { count, rows } = await Book.findAndCountAll({
+        where: {
+          [Op.or]: [
+            {
+              title: {
+                [Op.like]: `%${query}%`,
+              },
             },
-          },
-          {
-            author: {
-              [Op.like]: `%${query}%`,
+            {
+              author: {
+                [Op.like]: `%${query}%`,
+              },
             },
-          },
-          {
-            genre: {
-              [Op.like]: `%${query}%`,
+            {
+              genre: {
+                [Op.like]: `%${query}%`,
+              },
             },
-          },
-          {
-            year: {
-              [Op.like]: `%${query}%`,
+            {
+              year: {
+                [Op.like]: `%${query}%`,
+              },
             },
-          },
-        ],
-      },
-      order: [['year', 'DESC']],
-      offset: offset,
-      limit: limit,
-    });
-    books = rows;
-    const pagiLinksTotal = Math.ceil(count / limit);
+          ],
+        },
+        order: [['year', 'DESC']],
+        offset: offset,
+        limit: limit,
+      });
+      books = rows;
 
-    res.render('index', {
-      books: books,
-      title: 'Books',
-      query: query,
-      total: count,
-      limit: 10,
-      numberOfLinks: pagiLinksTotal,
-    });
+      const pagiLinksTotal = Math.ceil(count / limit);
+
+      res.render('index', {
+        books: books,
+        title: 'Books',
+        query: query,
+        total: count,
+        pageNum: page,
+        limit: 10,
+        numberOfLinks: pagiLinksTotal,
+      });
+    } catch (err) {
+      throw err;
+    }
   })
 );
 
@@ -73,6 +80,7 @@ router.post(
   asyncHandler(async (req, res) => {
     const limit = 10;
     const query = req.body.search;
+    const page = req.query.page ? req.query.page : 1;
     let books;
     const { count, rows } = await Book.findAndCountAll({
       where: {
@@ -110,6 +118,7 @@ router.post(
       title: 'Books',
       query: query,
       limit: limit,
+      pageNum: page,
       total: count,
       numberOfLinks: pagiLinksTotal,
     });

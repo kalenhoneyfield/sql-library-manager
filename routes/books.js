@@ -23,6 +23,7 @@ router.get(
   asyncHandler(async (req, res) => {
     const limit = req.query.limit || 10;
     let offset = req.query.page ? (req.query.page - 1) * limit : 0;
+    const page = req.query.page ? req.query.page : 1;
     let books;
     const { count, rows } = await Book.findAndCountAll({
       order: [['year', 'DESC']],
@@ -36,6 +37,7 @@ router.get(
       books: books,
       title: 'Books',
       total: count,
+      pageNum: page,
       limit: 10,
       numberOfLinks: pagiLinksTotal,
     });

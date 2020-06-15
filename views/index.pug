@@ -31,10 +31,13 @@ block content
       - var n = 0;
         while n < numberOfLinks
           - var page = ((n++) +1)
+          - var active = ''
+          if page == pageNum
+            - active = 'active'
           li
             if query
-              a(href=`?query=${query}&page=${page}&limit=${limit}`)= page
+              a(href=`?query=${query}&page=${page}&limit=${limit}` class=`${active}`)= page
             else
-              a(href=`?page=${page}&limit=${limit}`)= page
+              a(href=`?page=${page}&limit=${limit}` class=`${active}`)= page
 
   script(src='/javascripts/app.js')
