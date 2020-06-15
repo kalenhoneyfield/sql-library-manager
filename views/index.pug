@@ -4,7 +4,10 @@ block content
 
   p.searchInput
     a.button.border(href=`/books/new`) Create New Book
-    input#searchInput(type="text" placeholder="Search..")
+    div.flex
+      form(method='POST' action=`/search`)
+        input#searchInput(type="text" name="search" placeholder="Search..")
+        input.border(type="submit" value="Search")
   
   table#bookTable
     tr
@@ -25,5 +28,13 @@ block content
 
   div.pagination-section
     ul.pagination
+      - var n = 0;
+        while n < numberOfLinks
+          - var page = ((n++) +1)
+          li
+            if query
+              a(href=`?query=${query}&page=${page}&limit=${limit}`)= page
+            else
+              a(href=`?page=${page}&limit=${limit}`)= page
 
   script(src='/javascripts/app.js')

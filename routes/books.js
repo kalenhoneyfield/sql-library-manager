@@ -3,6 +3,9 @@ const router = express.Router();
 const createError = require('http-errors');
 const Book = require('../models').Book;
 
+const db = require('../models');
+const { Op } = db.Sequelize;
+
 //catch server side errors in one place
 function asyncHandler(callback) {
   return async (req, res, next) => {
@@ -18,10 +21,24 @@ function asyncHandler(callback) {
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const books = await Book.findAll({
+    const limit = req.query.limit || 10;
+    let offset = req.query.page ? (req.query.page - 1) * limit : 0;
+    let books;
+    const { count, rows } = await Book.findAndCountAll({
       order: [['year', 'DESC']],
+      offset: offset,
+      limit: limit,
     });
-    res.render('index', { books: books, title: 'Books' });
+    books = rows;
+    const pagiLinksTotal = Math.ceil(count / limit);
+
+    res.render('index', {
+      books: books,
+      title: 'Books',
+      total: count,
+      limit: 10,
+      numberOfLinks: pagiLinksTotal,
+    });
   })
 );
 
