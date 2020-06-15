@@ -4,6 +4,11 @@ block content
 
   .fontWhite
     h1= title
+      if update
+        h2 This book has been updated in the database!
+      if create
+        h2 This book has been added to the database!
+        
 
       p 
         label(for="title") Title 

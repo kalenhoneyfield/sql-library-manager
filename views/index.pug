@@ -3,8 +3,7 @@ extends layout
 block content
 
   p.searchInput
-    a.button.border(href=`/books/new`) Create New Book
-    div.flex
+    div.flex.flexEnd
       form(method='POST' action=`/search`)
         input#searchInput(type="text" name="search" placeholder="Search..")
         input.border(type="submit" value="Search")

@@ -86,12 +86,14 @@ class Bubble {
   }
 }
 
-function makeBubbles() {
+function makeBubbles(size, color) {
+  const defaultColor = color || '#fff';
+  const preSize = size || 100;
   const number = 100;
   let bubbly = [];
   for (let i = 0; i < number; i++) {
-    const size = Math.floor(Math.random() * 100);
-    const bub = new Bubble(size, 0, '#fff', 'body');
+    const size = Math.floor(Math.random() * preSize);
+    const bub = new Bubble(size, 0, defaultColor, 'body');
     bubbly.push(bub);
   }
 

@@ -9,10 +9,11 @@ body {
 }
 
 a {
-  color: #ff7d00;
+  color: #ffa07a;
   text-decoration: none;
   font-weight: bold;
   transition: 0.4s;
+  text-shadow: 2px 2px 2px black;
 }
 
 /* a:hover {
@@ -73,6 +74,16 @@ tr {
 
 tr:nth-child(2n) {
   background: #e7e7e7;
+}
+
+tr:nth-child(2n) a {
+  /* color: #ff7d00; */
+  color: #d24d57;
+  text-shadow: 1px 1px black;
+}
+
+tr:hover {
+  transform: scale(1.01);
 }
 
 td {
@@ -176,7 +187,7 @@ input[type='text'] {
 }
 
 .searchInput {
-  display: grid;
+  display: flex;
   place-items: flex-end;
 }
 
@@ -219,4 +230,9 @@ heading {
 
 .fontWhite {
   color: #fff;
+}
+
+.flexEnd {
+  align-items: flex-end;
+  justify-content: flex-end;
 }

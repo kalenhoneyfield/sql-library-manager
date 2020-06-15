@@ -57,7 +57,7 @@ router.post(
     let book;
     try {
       book = await Book.create(req.body);
-      res.redirect('/books/' + book.id);
+      res.render('view-book', { book: book, title: book.title, create: true });
     } catch (err) {
       if (err.name === 'SequelizeValidationError') {
         book = await Book.build(req.body);
@@ -81,7 +81,7 @@ router.get(
     if (book) {
       res.render('view-book', { book: book, title: book.title });
     } else {
-      next(createError(404));
+      res.redirect('/bookNotFound');
     }
   })
 );
@@ -94,7 +94,7 @@ router.get(
     if (book) {
       res.render('update-book', { book: book, title: `Edit: ${book.title}` });
     } else {
-      next(createError(404));
+      res.redirect('/bookNotFound');
     }
   })
 );
@@ -108,10 +108,10 @@ router.post(
     try {
       book = await Book.findByPk(req.params.id);
       if (book) {
-        await book.update(req.body);
-        res.redirect('/books/' + book.id);
+        book = await book.update(req.body);
+        res.render('view-book', { book: book, title: book.title, update: true });
       } else {
-        next(createError(404));
+        res.redirect('/bookNotFound');
       }
     } catch (err) {
       if (err.name === 'SequelizeValidationError') {
@@ -138,7 +138,7 @@ router.get(
     if (book) {
       res.render('delete-book', { book: book, title: book.title });
     } else {
-      res.sendStatus(404);
+      res.redirect('/bookNotFound');
     }
   })
 );
@@ -152,7 +152,7 @@ router.post(
       await book.destroy();
       res.redirect('/books');
     } else {
-      res.sendStatus(404);
+      res.redirect('/bookNotFound');
     }
   })
 );
