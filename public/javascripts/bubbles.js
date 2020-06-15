@@ -1,3 +1,7 @@
+/**
+ * For more information and to review the README: https://github.com/kalenhoneyfield/bubbles.git
+ */
+
 class Bubble {
   constructor(size, blur, color, elem) {
     this._size = size;
